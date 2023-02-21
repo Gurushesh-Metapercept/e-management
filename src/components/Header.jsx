@@ -1,13 +1,16 @@
 import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import EmpDataServices from "../services/emp.services";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
+  const navigate = useNavigate();
   const handleLogOut = () => {
     EmpDataServices.logout();
+    navigate("/");
   };
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="primary" variant="dark" expand="lg">
       <Container>
         <Navbar.Brand href="#home">E-manage</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
