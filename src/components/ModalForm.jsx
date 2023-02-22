@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import {
+  emailValidation,
+  mobileValidation,
+  nameValidation,
+} from "../utils/Helper";
 
 export const ModalForm = ({ show, setShow, onSubmit }) => {
   const [firstName, setFirstName] = useState("");
@@ -7,7 +12,42 @@ export const ModalForm = ({ show, setShow, onSubmit }) => {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [fNameError, setFnameError] = useState("");
+  const [lNameError, setLnameError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [validForm, setValidForm] = useState(false);
+
   const [error, setError] = useState(false);
+
+  // Email Validation
+  function handleEmailChange(event) {
+    const value = event.target.value;
+    setEmail(value);
+    const err_msg = emailValidation(value);
+    setEmailError(err_msg);
+  }
+
+  function handleFNameChange(event) {
+    const value = event.target.value;
+    setFirstName(value);
+    const err_msg = nameValidation(value);
+    setFnameError(err_msg);
+  }
+  function handleLNameChange(event) {
+    const value = event.target.value;
+    setLastName(value);
+    const err_msg = nameValidation(value);
+    setLnameError(err_msg);
+  }
+  function handlePhoneChange(event) {
+    const value = event.target.value;
+    setPhone(value);
+    const err_msg = mobileValidation(value);
+    setPhoneError(err_msg);
+  }
 
   const handleClose = () => {
     setShow(false);
@@ -17,6 +57,8 @@ export const ModalForm = ({ show, setShow, onSubmit }) => {
     setCity("");
     setState("");
     setZip("");
+    setPhone("");
+    setEmail("");
   };
 
   function handleSubmit(event) {
@@ -38,11 +80,21 @@ export const ModalForm = ({ show, setShow, onSubmit }) => {
     ) {
       setError(true);
     } else {
+      if (
+        emailError !== "" ||
+        fNameError !== "" ||
+        lNameError !== "" ||
+        phoneError !== ""
+      ) {
+        setError(true);
+      }
       onSubmit(data);
       setShow(false);
       setError(false);
       setFirstName("");
       setLastName("");
+      setPhone("");
+      setEmail("");
       setCity("");
       setState("");
       setZip("");
@@ -69,26 +121,59 @@ export const ModalForm = ({ show, setShow, onSubmit }) => {
               ""
             )}
             <Row className="mb-3">
-              <Form.Group as={Col} controlId="formGridEmail">
+              <Form.Group as={Col} controlId="formGridFName">
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
                   type="text"
                   name="firstName"
                   value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={handleFNameChange}
                   placeholder="Alex"
                 />
+                {fNameError && (
+                  <Form.Text className="text-danger">{fNameError}</Form.Text>
+                )}
               </Form.Group>
 
               <Form.Group as={Col} controlId="formGridPassword">
                 <Form.Label>Last Name</Form.Label>
                 <Form.Control
                   type="text"
-                  name="lastName"
                   value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={handleLNameChange}
                   placeholder="Jone"
                 />
+                {lNameError && (
+                  <Form.Text className="text-danger">{lNameError}</Form.Text>
+                )}
+              </Form.Group>
+            </Row>
+
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formGridEmail">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  placeholder="example@test.com"
+                />
+                {emailError && (
+                  <Form.Text className="text-danger">{emailError}</Form.Text>
+                )}
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formGridPhone">
+                <Form.Label>Phone</Form.Label>
+                <Form.Control
+                  type="number"
+                  value={phone}
+                  onChange={handlePhoneChange}
+                  placeholder="0123456789"
+                />
+                {phoneError && (
+                  <Form.Text className="text-danger">{phoneError}</Form.Text>
+                )}
               </Form.Group>
             </Row>
 
