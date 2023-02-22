@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import EmployeesTable from "../components/EmployeesTable";
 import { ModalForm } from "../components/ModalForm";
+import NoData from "../components/NoData";
 import { useUserAuth } from "../context/UserAuthContext";
 import { auth } from "../firebase/init";
 
@@ -49,7 +50,11 @@ export const Home = () => {
         </div>
       </div>
       <div className="row mt-5">
-        <EmployeesTable empList={empList} />
+        {empList.length !== 0 ? (
+          <EmployeesTable empList={empList} />
+        ) : (
+          <NoData />
+        )}
       </div>
     </div>
   );
