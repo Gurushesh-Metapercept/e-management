@@ -8,6 +8,7 @@ import {
 } from "../utils/Helper";
 
 export const ModalForm = ({ show, setShow, onSubmit }) => {
+  // for input update
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [city, setCity] = useState("");
@@ -15,13 +16,13 @@ export const ModalForm = ({ show, setShow, onSubmit }) => {
   const [zip, setZip] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+
+  //Error Message
   const [emailError, setEmailError] = useState("");
   const [fNameError, setFnameError] = useState("");
   const [lNameError, setLnameError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [zipCodeError, setZipCodeError] = useState("");
-  const [validForm, setValidForm] = useState(false);
-
   const [error, setError] = useState(false);
 
   // Email Validation
@@ -32,18 +33,22 @@ export const ModalForm = ({ show, setShow, onSubmit }) => {
     setEmailError(err_msg);
   }
 
+  //Name Validation
   function handleFNameChange(event) {
     const value = event.target.value;
     setFirstName(value);
     const err_msg = nameValidation(value);
     setFnameError(err_msg);
   }
+  //Name Validation
   function handleLNameChange(event) {
     const value = event.target.value;
     setLastName(value);
     const err_msg = nameValidation(value);
     setLnameError(err_msg);
   }
+
+  //Phone Validaton
   function handlePhoneChange(event) {
     const value = event.target.value;
     setPhone(value);
@@ -51,6 +56,7 @@ export const ModalForm = ({ show, setShow, onSubmit }) => {
     setPhoneError(err_msg);
   }
 
+  //Zipcode Validation
   function handleZipCode(event) {
     const value = event.target.value;
     setZip(value);
@@ -136,7 +142,6 @@ export const ModalForm = ({ show, setShow, onSubmit }) => {
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
                   type="text"
-                  name="firstName"
                   value={firstName}
                   onChange={handleFNameChange}
                   placeholder="Alex"

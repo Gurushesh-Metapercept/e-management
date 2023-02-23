@@ -1,43 +1,34 @@
-import { collection, doc, getDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { Table } from "react-bootstrap";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { useUserAuth } from "../context/UserAuthContext";
-import { db } from "../firebase/init";
+
 import { UpdateModal } from "./UpdateModal";
 
 function EmployeesTable({ empList }) {
-  const { isUpdated, setIsUpdated, deleteEmployee, user } = useUserAuth();
+  const { isUpdated, setIsUpdated, deleteEmployee } = useUserAuth();
   const [show, setShow] = useState(false);
-  const [updateData, setUpdateData] = useState([]);
+  const [updateData, setUpdateData] = useState({});
 
   const handleDelete = (id) => {
     deleteEmployee(id);
     setIsUpdated(!isUpdated);
   };
 
-  const handleUpdate = (id) => {
+  const handleUpdate = (e) => {
     setShow(true);
-    console.log("clikk");
-
-    const usersRef = collection(db, "users");
-    const userDocRef = doc(usersRef, user.uid);
-    const empsRef = collection(userDocRef, "employees");
-    const empDocRef = doc(empsRef, id);
-
-    getDoc(empDocRef)
-      .then((doc) => {
-        if (doc.exists()) {
-          const empData = doc.data();
-          // console.log(empData);
-          setUpdateData({ empData });
-        } else {
-          console.log("employee not found");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    console.log("clicked -" + e.id);
+    // console.log(e);
+    setUpdateData({
+      id: e.id,
+      firstName: e.firstName,
+      lastName: e.lastName,
+      email: e.email,
+      phone: e.phone,
+      city: e.city,
+      state: e.state,
+      zip: e.zip,
+    });
   };
 
   return (
@@ -67,17 +58,18 @@ function EmployeesTable({ empList }) {
                 <td>{e.state}</td>
                 <td>{e.zip}</td>
                 <td>
-                  <FiEdit
-                    cursor="pointer"
-                    color="green"
-                    onClick={() => handleUpdate(e.id)}
-                    className="me-md-4"
-                  />
-                  <FiTrash2
-                    color="red"
-                    cursor="pointer"
-                    onClick={() => handleDelete(e.id)}
-                  />
+                  <div className="d-flex justify-content-evenly">
+                    <FiEdit
+                      cursor="pointer"
+                      color="green"
+                      onClick={() => handleUpdate(e)}
+                    />
+                    <FiTrash2
+                      color="red"
+                      cursor="pointer"
+                      onClick={() => handleDelete(e.id)}
+                    />
+                  </div>
                 </td>
               </tr>
             ))}

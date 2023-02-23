@@ -20,7 +20,7 @@ import { auth, db } from "../firebase/init";
 const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(null);
   const [isUpdated, setIsUpdated] = useState(false);
 
   // Login
@@ -48,7 +48,8 @@ export function UserAuthContextProvider({ children }) {
   // Logout
   function logOut() {
     console.log("logged out");
-    return signOut(auth);
+    signOut(auth);
+    setUser(null);
   }
 
   // Add Employee
@@ -125,7 +126,7 @@ export function UserAuthContextProvider({ children }) {
   }
 
   // Update Employee
-  function updateEmployee(user, id, data) {
+  function updateEmployee(id, user, updatedEmployeeData) {
     if (user) {
       const userId = user.uid;
 
@@ -135,7 +136,7 @@ export function UserAuthContextProvider({ children }) {
       const todoDocRef = doc(empsRef, id);
 
       updateDoc(todoDocRef, {
-        ...data,
+        ...updatedEmployeeData,
       })
         .then(() => {
           console.log("employee updated successfully");
