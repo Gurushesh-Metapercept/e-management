@@ -42,11 +42,13 @@ function EmployeesTable({ empList }) {
 
   return (
     <>
-      <Table striped bordered hover>
+      <Table striped bordered hover responsive>
         <thead>
           <tr>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
             <th>City</th>
             <th>State</th>
             <th>Zip</th>
@@ -59,16 +61,20 @@ function EmployeesTable({ empList }) {
               <tr key={e.id}>
                 <td>{e.firstName}</td>
                 <td>{e.lastName}</td>
+                <td>{e.email}</td>
+                <td>{e.phone}</td>
                 <td>{e.city}</td>
                 <td>{e.state}</td>
                 <td>{e.zip}</td>
                 <td>
                   <FiEdit
                     cursor="pointer"
+                    color="green"
                     onClick={() => handleUpdate(e.id)}
-                    className="me-4"
+                    className="me-md-4"
                   />
                   <FiTrash2
+                    color="red"
                     cursor="pointer"
                     onClick={() => handleDelete(e.id)}
                   />

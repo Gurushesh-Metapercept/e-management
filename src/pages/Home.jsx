@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Spinner } from "react-bootstrap";
 import EmployeesTable from "../components/EmployeesTable";
 import { ModalForm } from "../components/ModalForm";
 import NoData from "../components/NoData";
@@ -49,11 +50,14 @@ export const Home = () => {
           <ModalForm show={show} setShow={setShow} onSubmit={handleFormData} />
         </div>
       </div>
-      <div className="row mt-5">
+      <div className="row mt-5 ">
         {empList.length !== 0 ? (
           <EmployeesTable empList={empList} />
         ) : (
-          <NoData />
+          // <NoData />
+          <div className="row d-flex justify-content-center">
+            <Spinner animation="grow" variant="primary" />
+          </div>
         )}
       </div>
     </div>

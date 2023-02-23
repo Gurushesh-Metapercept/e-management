@@ -4,6 +4,7 @@ import {
   emailValidation,
   mobileValidation,
   nameValidation,
+  validateZipCode,
 } from "../utils/Helper";
 
 export const ModalForm = ({ show, setShow, onSubmit }) => {
@@ -18,6 +19,7 @@ export const ModalForm = ({ show, setShow, onSubmit }) => {
   const [fNameError, setFnameError] = useState("");
   const [lNameError, setLnameError] = useState("");
   const [phoneError, setPhoneError] = useState("");
+  const [zipCodeError, setZipCodeError] = useState("");
   const [validForm, setValidForm] = useState(false);
 
   const [error, setError] = useState(false);
@@ -49,6 +51,13 @@ export const ModalForm = ({ show, setShow, onSubmit }) => {
     setPhoneError(err_msg);
   }
 
+  function handleZipCode(event) {
+    const value = event.target.value;
+    setZip(value);
+    const err_msg = validateZipCode(value);
+    setZipCodeError(err_msg);
+  }
+
   const handleClose = () => {
     setShow(false);
     setError(false);
@@ -66,6 +75,8 @@ export const ModalForm = ({ show, setShow, onSubmit }) => {
     const data = {
       firstName,
       lastName,
+      email,
+      phone,
       city,
       state,
       zip,
@@ -199,13 +210,16 @@ export const ModalForm = ({ show, setShow, onSubmit }) => {
               </Form.Group>
 
               <Form.Group as={Col} controlId="formGridZip">
-                <Form.Label>Zip</Form.Label>
+                <Form.Label>Pincode</Form.Label>
                 <Form.Control
                   name="zip"
                   type="number"
                   value={zip}
-                  onChange={(e) => setZip(e.target.value)}
+                  onChange={handleZipCode}
                 />
+                {zipCodeError && (
+                  <Form.Text className="text-danger">{zipCodeError}</Form.Text>
+                )}
               </Form.Group>
             </Row>
             <Button type="submit" variant="primary">
