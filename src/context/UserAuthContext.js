@@ -117,10 +117,10 @@ export function UserAuthContextProvider({ children }) {
 
       deleteDoc(empDocRef)
         .then(() => {
-          console.log("Todo deleted");
+          console.log("employee deleted");
         })
         .catch((error) => {
-          console.error("Error deleting todo: ", error);
+          console.error("Error deleting employee: ", error);
         });
     }
   }
@@ -133,16 +133,16 @@ export function UserAuthContextProvider({ children }) {
       const usersRef = collection(db, "users");
       const userDocRef = doc(usersRef, userId);
       const empsRef = collection(userDocRef, "employees");
-      const todoDocRef = doc(empsRef, id);
+      const empDocRef = doc(empsRef, id);
 
-      updateDoc(todoDocRef, {
+      updateDoc(empDocRef, {
         ...updatedEmployeeData,
       })
         .then(() => {
           console.log("employee updated successfully");
         })
         .catch((error) => {
-          console.error("Error updating todo: ", error);
+          console.error("Error updating employee: ", error);
         });
     }
   }

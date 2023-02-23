@@ -79,14 +79,14 @@ export const UpdateModal = ({ show, setShow, updateData }) => {
   };
 
   useEffect(() => {
-    setUpdateFN(firstName);
-    setUpdateLN(lastName);
-    setUpdateCity(city);
-    setUpdateState(state);
-    setUpdatePhone(phone);
-    setUpdateEmail(email);
-    setUpdateZip(zip);
-  }, [show]);
+    setUpdateFN(firstName || "");
+    setUpdateLN(lastName || "");
+    setUpdateCity(city || "");
+    setUpdateState(state || "");
+    setUpdatePhone(phone || "");
+    setUpdateEmail(email || "");
+    setUpdateZip(zip || "");
+  }, [city, email, firstName, lastName, phone, show, state, zip]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -133,7 +133,7 @@ export const UpdateModal = ({ show, setShow, updateData }) => {
     <>
       <Modal size="lg" show={show} centered>
         <Modal.Header closeButton onClick={handleClose}>
-          <Modal.Title>Add Employee</Modal.Title>
+          <Modal.Title>Update Employee</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>

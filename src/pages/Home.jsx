@@ -9,6 +9,7 @@ import { auth } from "../firebase/init";
 export const Home = () => {
   const [show, setShow] = useState(false);
   const [empList, setEmpList] = useState([]);
+  const [loader, setLoader] = useState(false);
 
   const { addEmployee, fetchEmpData, isUpdated, setIsUpdated } = useUserAuth();
 
@@ -27,12 +28,14 @@ export const Home = () => {
   };
 
   useEffect(() => {
+    setLoader(true);
     fetchEmpData()
       .then((fetchedData) => {
         const flatData = fetchedData.flat(); // Flatten the array of arrays
 
         console.log(flatData);
         setEmpList(flatData);
+        setLoader(false);
       })
       .catch((error) => {
         console.error(error);
@@ -51,13 +54,13 @@ export const Home = () => {
         </div>
       </div>
       <div className="row mt-5 ">
-        {empList.length !== 0 ? (
-          <EmployeesTable empList={empList} />
-        ) : (
-          // <NoData />
+        {loader ? (
           <div className="row d-flex justify-content-center">
             <Spinner animation="grow" variant="primary" />
           </div>
+        ) : (
+          // <NoData />
+          <EmployeesTable empList={empList} />
         )}
       </div>
     </div>
