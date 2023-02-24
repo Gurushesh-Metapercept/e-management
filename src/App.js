@@ -15,7 +15,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/add-employee" element={<AddEmployee />} />
+
           <Route path="/register" element={<Register />} />
           <Route
             path="/home"
