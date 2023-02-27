@@ -20,9 +20,11 @@ export const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={NavLink} to="/home">
-              Home
-            </Nav.Link>
+            {user && (
+              <Nav.Link as={NavLink} to="/home">
+                Home
+              </Nav.Link>
+            )}
           </Nav>
           {user && (
             <NavDropdown
